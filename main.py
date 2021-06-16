@@ -49,6 +49,8 @@ import csv
 #     arq.close()
 
 
+
+
 # INSERT INTO public.paciente(
 # 	cel, (length = 60, String) Ex: (61) 33457646
 # 	cpf, ( length = 90, String)  OBS: sem pontuação - Obrigatorio
@@ -103,3 +105,18 @@ import csv
 #  - Criar prontuario
 #  - Criar permissao_ponrtuario clinica
 #  - Criar insert Anamnese
+
+
+# 20	Leonardo Spagnol Abraham
+# 25	Sofia Sales
+# 26	Ana Acioli de Queiroz
+# 2	Melissa Chaves Azevedo e Silva
+
+# onde é null, tem que concatenar sem as aspas simples, e onde é fk as colunas são long ai tem que ser sem aspas simples tbm
+# marca_de_verificação_branca
+# olhos
+# mãos_para_cima
+#
+
+# 11h18
+# e onde é variavel booleano tbm

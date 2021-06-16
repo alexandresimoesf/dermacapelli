@@ -112,6 +112,15 @@ import csv
 # 26	Ana Acioli de Queiroz
 # 2	Melissa Chaves Azevedo e Silva
 
+
+# id_medico_doctor	fk_precoespecializacao_id
+# 203	                776
+# 210	                798
+# 213	                806
+# 212	                804
+# 214	                808
+# 211	                801
+
 # onde é null, tem que concatenar sem as aspas simples, e onde é fk as colunas são long ai tem que ser sem aspas simples tbm
 # marca_de_verificação_branca
 # olhos

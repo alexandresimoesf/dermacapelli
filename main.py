@@ -132,3 +132,4 @@ import csv
 
 # INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from PACIENTE where id_paciente_visao = 106073;
 # id from PACIENTE where id_paciente_visao = 106073;
+# esse where aqui vai ser na coluna id do seu banco que vai estar referenciado no banco da doctor

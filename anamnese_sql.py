@@ -1,9 +1,9 @@
 import csv
 
 medicos: dict = {'20': '203',
-                 'n25': '210',
-                 'n26': '212',
-                 'n2': '211'}
+                 '25': '210',
+                 '26': '212',
+                 '2': '211'}
 
 
 def anamnese(*args):
@@ -18,15 +18,15 @@ def anamnese(*args):
                 print('#' * 10)
                 print(codigo_agenda, data_agenda)
                 for linha in reader:
-                    codigo, data = linha['CodPaciente'], '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])
-                    if codigo == codigo_agenda and data == data_agenda:
-                        if linha['Historico'] != 'null':
-                            historic += linha['Historico'] + '. '
-                historic = historic.replace('<Crlf>', '').replace('<CRLF>', '')
-                print(linha['CodMedico'])
-                # fk_medico_id = medicos[linha['CodMedico']]
-                sqlconteudo = "'{}', null, '{} 08:00:00', '{}', 'valor sql');".format(historic, data, linha['CodMedico'])
-                sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
+                    if linha['CodMedico'] in medicos.keys():
+                        codigo, data = linha['CodPaciente'], '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])
+                        if codigo == codigo_agenda and data == data_agenda:
+                            if linha['Historico'] != 'null':
+                                historic += linha['Historico'] + '. '
+                        historic = historic.replace('<Crlf>', '').replace('<CRLF>', '')
+                        fk_medico_id = medicos[linha['CodMedico']]
+                        sqlconteudo = "'{}', null, '{} 08:00:00', '{}', 'valor sql');".format(historic, data, fk_medico_id)
+                        sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sql_final)
                 file.seek(0)
     # file.close()

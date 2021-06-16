@@ -11,6 +11,8 @@ def anamnese(*args):
                 codigo, data = linha['CodPaciente'], '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])
                 if codigo == codigo_agenda and data == data_agenda:
                     if linha['Historico'] != 'null':
-                        print(linha['Historico'])
+                        pass
+                        # print(linha['Historico'])
+            file.seek(0)
         file.close()
         exit()

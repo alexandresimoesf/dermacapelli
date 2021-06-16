@@ -2,8 +2,9 @@ import csv
 from anamnese_sql import anamnese
 
 medicos: dict = {'20': '203',
-                 'n': '210',
-                 'nn': '212'}
+                 '25': '210',
+                 '26': '212',
+                 '2': '211'}
 
 agenda_to_anamnese: list = []
 

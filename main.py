@@ -39,15 +39,14 @@ import csv
 # combinar.to_csv('combinacao.csv', index=False)
 # print('#'*10)
 
-for file in ['PACIENTE_NOVO.csv', 'HISTORIC_NOVO.csv', 'combinacao.csv', 'PROFISS_NOVO.csv']:
-    with open(file, 'r', encoding='latin-1') as arq:
-        print('#'*10)
-        reader = csv.DictReader(arq, delimiter=';')
-        headers = reader.fieldnames
-        print(headers)
-
-    arq.close()
-
+# for file in ['PACIENTE_NOVO.csv', 'HISTORIC_NOVO.csv', 'combinacao.csv', 'PROFISS_NOVO.csv']:
+#     with open(file, 'r', encoding='latin-1') as arq:
+#         print('#'*10)
+#         reader = csv.DictReader(arq, delimiter=';')
+#         headers = reader.fieldnames
+#         print(headers)
+#
+#     arq.close()
 
 
 # INSERT INTO public.paciente(

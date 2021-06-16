@@ -1,8 +1,11 @@
 import csv
+from anamnese_sql import anamnese
 
 medicos: dict = {'20': '203',
                  'n': '210',
                  'nn': '212'}
+
+agenda_to_anamnese: list = []
 
 with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
     reader = csv.DictReader(file, delimiter=';')
@@ -64,9 +67,12 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
 
                 sqlfinal = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sqlfinal)
+                agenda_to_anamnese.append((linha['CodPaciente'], data_agendada))
                 # if n >= 1000:
                 #     sql.close()
                 #     file.close()
                 #     break
+
 sql.close()
 file.close()
+anamnese(agenda_to_anamnese)

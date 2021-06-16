@@ -23,11 +23,15 @@ def anamnese(*args):
                         if codigo == codigo_agenda and data == data_agenda:
                             if linha['Historico'] != 'null':
                                 historic += linha['Historico'] + '. '
-                        historic = historic.replace('<Crlf>', '')
-                        historic = historic.replace('<CRLF>', '')
-                        fk_medico_id = medicos[linha['CodMedico']]
-                        sqlconteudo = "'{}', null, '{} 08:00:00', '{}', 'valor sql');".format(historic, data, fk_medico_id)
-                        sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
+                            historic = historic.replace('<Crlf>', '')
+                            historic = historic.replace('<CRLF>', '')
+                            fk_medico_id = medicos[linha['CodMedico']]
+                            sqlconteudo = "'{}', null, '{} 08:00:00', '{}'," \
+                                          " p.id from public.prontuario p where fk_paciente_id = {});".format(historic,
+                                                                                                              data,
+                                                                                                              fk_medico_id,
+                                                                                                              codigo)
+                            sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sql_final)
                 file.seek(0)
     # file.close()

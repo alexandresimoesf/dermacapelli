@@ -39,13 +39,13 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 fk_clinica_id = '83'
                 fk_medico_id = medicos[linha['CodMedico']]
                 fk_paciente_id = linha['CodPaciente']
-                fk_especializacao_id = ''
-                fk_forma_atendimento_id = ''
+                fk_especializacao_id = 'null'
+                fk_forma_atendimento_id = 'null'
 
                 sqlconteudo = "'{}', '{}', '{}', '{}', '{}', {}," \
                               " '{}', '{}', '{}', '{}', '{}', {}," \
-                              " '{}', {}, '{}', {}, '{}', '{}'," \
-                              " '{}', '{}', '{}');".format(data_agendada,
+                              " '{}', {}, '{}', {}, {}, {}," \
+                              " {}, {}, {});".format(data_agendada,
                                                                  data_agendada_timestamp,
                                                                  horario, descricao,
                                                                  etiqueta, status,
@@ -68,12 +68,12 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 sqlfinal = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sqlfinal)
                 agenda_to_anamnese.append((linha['CodPaciente'], data_agendada))
-                # if linha['CodPaciente'] == '510':
-                #     sql.close()
-                #     file.close()
-                #     anamnese(agenda_to_anamnese)
-                #     break
-
-sql.close()
-file.close()
+                if linha['CodPaciente'] == '510':
+                    sql.close()
+                    file.close()
+                    anamnese(agenda_to_anamnese)
+                    break
+#
+# sql.close()
+# file.close()
 # anamnese(agenda_to_anamnese)

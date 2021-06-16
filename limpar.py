@@ -1,4 +1,3 @@
-
 import csv
 # encoding utf-8 para profiss e latin-1 para outros
 codigos = []

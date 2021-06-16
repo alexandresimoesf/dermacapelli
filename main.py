@@ -129,3 +129,6 @@ import csv
 
 # 11h18
 # e onde é variavel booleano tbm
+
+# INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from PACIENTE where id_paciente_visao = 106073;
+# id from PACIENTE where id_paciente_visao = 106073;

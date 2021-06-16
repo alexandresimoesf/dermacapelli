@@ -5,6 +5,7 @@ medicos: dict = {'20': '203',
                  'n26': '212',
                  'n2': '211'}
 
+
 def anamnese(*args):
     with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
         reader = csv.DictReader(file, delimiter=';')

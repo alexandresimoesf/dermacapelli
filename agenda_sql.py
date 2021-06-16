@@ -67,13 +67,13 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
 
                 sqlfinal = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sqlfinal)
+                sql.write('INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(fk_paciente_id))
                 agenda_to_anamnese.append((linha['CodPaciente'], data_agendada))
                 if linha['CodPaciente'] == '510':
                     sql.close()
                     file.close()
                     anamnese(agenda_to_anamnese)
                     break
-#
 # sql.close()
 # file.close()
 # anamnese(agenda_to_anamnese)

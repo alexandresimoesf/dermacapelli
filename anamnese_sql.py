@@ -12,7 +12,7 @@ def anamnese(*args):
         reader = csv.DictReader(file, delimiter=';')
         sql_inicio = 'INSERT INTO public.anamnese('
         colunas = 'anamnese, checksum, datacriacao, fk_responsavel_id, fk_prontuario_id) VALUES ('
-        with open('anamnese_sql.sql', 'w', encoding='utf-8') as sql:
+        with open('anamnese_sql_2.sql', 'w', encoding='utf-8') as sql:
             for codigo_agenda, data_agenda in args[0]:
                 historic = ''
                 for index, linha in enumerate(reader):

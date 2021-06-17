@@ -19,8 +19,6 @@ def anamnese(*args):
         with open('anamnese_sql.sql', 'w', encoding='utf-8') as sql:
             for codigo_agenda, data_agenda in args[0]:
                 historic = ''
-                # print('#' * 10)
-                # print(codigo_agenda, data_agenda)
                 for index, linha in enumerate(reader):
                     if linha['CodMedico'] in medicos.keys():
                         codigo, data = linha['CodPaciente'], '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])

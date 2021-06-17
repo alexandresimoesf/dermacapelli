@@ -1,10 +1,10 @@
 import csv
 from anamnese_sql import anamnese
 
-medicos: dict = {'20': '203',
+medicos: dict = {'n20': '203',
                  'n25': '210',
                  'n26': '212',
-                 'n2': '211'}
+                 '2': '211'}
 
 especializacao = {'203': '776',
                   '210': '798',
@@ -17,7 +17,7 @@ agenda_to_anamnese: list = []
 
 with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
     reader = csv.DictReader(file, delimiter=';')
-    sql = open('agenda_sql_203.sql', 'w', encoding='latin-1')
+    sql = open('agenda_sql_2.sql', 'w', encoding='latin-1')
     sql_inicio = 'INSERT INTO public.agenda('
     colunas = 'data_agendada, data_agendada_timestamp, horario, descricao, etiqueta, ' \
               'status, status_consulta, confirm_consulta, codigo_saida, data_solicitacao,' \
@@ -77,11 +77,11 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 sql.write('INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(
                         fk_paciente_id))
                 agenda_to_anamnese.append((n, linha['CodPaciente'], data_agendada))
-                if linha['CodPaciente'] == '3215':
-                    sql.close()
-                    file.close()
-                    anamnese(agenda_to_anamnese)
-                    break
-# sql.close()
-# file.close()
-# anamnese(agenda_to_anamnese)
+                # if linha['CodPaciente'] == '3215':
+                #     sql.close()
+                #     file.close()
+                #     anamnese(agenda_to_anamnese)
+                #     break
+sql.close()
+file.close()
+anamnese(agenda_to_anamnese)

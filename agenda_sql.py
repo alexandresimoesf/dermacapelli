@@ -52,7 +52,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 sqlconteudo = "'{}', '{}', '{}', '{}', '{}', {}," \
                               " '{}', '{}', '{}', '{}', '{}', {}," \
                               " '{}', {}, '{}', {}, {}, {}," \
-                              " SELECT id FROM public.paciente where paciente.id_paciente_dermacapelli = {}, {}, {});".format(data_agendada,
+                              " (SELECT id FROM public.paciente where paciente.id_paciente_dermacapelli = {}), {}, {});".format(data_agendada,
                                                                                                                              data_agendada_timestamp,
                                                                                                                              horario, descricao,
                                                                                                                              etiqueta, status,

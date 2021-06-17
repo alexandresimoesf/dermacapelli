@@ -1,5 +1,5 @@
 import csv
-from itertools import islice
+from collections import deque
 import time
 
 medicos: dict = {'20': '203',
@@ -39,6 +39,6 @@ def anamnese(*args):
                 print(time.time() - tempo)
                 sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sql_final)
-                file.seek(index)
+                file.seek(0)
     file.close()
     sql.close()

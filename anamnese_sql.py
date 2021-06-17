@@ -6,12 +6,9 @@ medicos: dict = {'20': '203',
                  '26': '212',
                  '2': '211'}
 
-d = deque(maxlen=2)
-
 
 def anamnese(*args):
     with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
-        # inicio = True
         reader = csv.DictReader(file, delimiter=';')
         sql_inicio = 'INSERT INTO public.anamnese('
         colunas = 'anamnese, checksum, datacriacao, fk_responsavel_id, fk_prontuario_id) VALUES ('
@@ -23,10 +20,6 @@ def anamnese(*args):
                         codigo, data = linha['CodPaciente'], '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])
                         if codigo == codigo_agenda and data == data_agenda:
                             if linha['Historico'] != 'null':
-                                # if not linha['CodPaciente'] in d and len(d) == 2:
-                                #     print('Novo paciente')
-                                # print(index, linha['CodPaciente'])
-                                # d.append(linha['CodPaciente'])
                                 historic += linha['Historico'] + '. '
                             historic = historic.replace('<Crlf>', '')
                             historic = historic.replace('<CRLF>', '')

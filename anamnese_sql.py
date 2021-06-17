@@ -1,5 +1,5 @@
 import csv
-from collections import deque
+from itertools import islice
 import time
 
 medicos: dict = {'20': '203',
@@ -14,13 +14,9 @@ def anamnese(*args):
         sql_inicio = 'INSERT INTO public.anamnese('
         colunas = 'anamnese, checksum, datacriacao, fk_responsavel_id, fk_prontuario_id) VALUES ('
         with open('anamnese_sql_203.sql', 'w', encoding='utf-8') as sql:
-            # print(len(args[0]))
-            # x = 0
             for n, codigo_agenda, data_agenda in args[0]:
                 historic = ''
-                # x +=1
-                # print(x/len(args[0]))
-                # print(n, codigo_agenda, data_agenda)
+                tempo = time.time()
                 for index, linha in enumerate(reader):
                     if index >= n:
                         if linha['CodMedico'] in medicos.keys():
@@ -33,14 +29,16 @@ def anamnese(*args):
                                 historic = historic.replace('<CRLF>', '')
                                 fk_medico_id = medicos[linha['CodMedico']]
                                 sqlconteudo = "'{}', null, '{} 08:00:00', {}," \
-                                              " (p.id from public.prontuario p where fk_paciente_id = {}));".format(historic,
-                                                                                                                    data,
-                                                                                                                    fk_medico_id,
-                                                                                                                    codigo)
+                                              " (p.id from public.prontuario p where fk_paciente_id = {}));".format(
+                                    historic,
+                                    data,
+                                    fk_medico_id,
+                                    codigo)
                             if linha['CodPaciente'] > codigo_agenda:
                                 break
+                print(time.time() - tempo)
                 sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sql_final)
-                file.seek(0)
+                file.seek(index)
     file.close()
     sql.close()

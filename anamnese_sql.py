@@ -1,6 +1,5 @@
 import csv
 from collections import deque
-from itertools import islice
 
 medicos: dict = {'20': '203',
                  '25': '210',
@@ -12,7 +11,7 @@ d = deque(maxlen=2)
 
 def anamnese(*args):
     with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
-        inicio = True
+        # inicio = True
         reader = csv.DictReader(file, delimiter=';')
         sql_inicio = 'INSERT INTO public.anamnese('
         colunas = 'anamnese, checksum, datacriacao, fk_responsavel_id, fk_prontuario_id) VALUES ('
@@ -24,10 +23,10 @@ def anamnese(*args):
                         codigo, data = linha['CodPaciente'], '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])
                         if codigo == codigo_agenda and data == data_agenda:
                             if linha['Historico'] != 'null':
-                                if not linha['CodPaciente'] in d and len(d) == 2:
-                                    print('Novo paciente')
-                                print(index, linha['CodPaciente'])
-                                d.append(linha['CodPaciente'])
+                                # if not linha['CodPaciente'] in d and len(d) == 2:
+                                #     print('Novo paciente')
+                                # print(index, linha['CodPaciente'])
+                                # d.append(linha['CodPaciente'])
                                 historic += linha['Historico'] + '. '
                             historic = historic.replace('<Crlf>', '')
                             historic = historic.replace('<CRLF>', '')
@@ -40,5 +39,5 @@ def anamnese(*args):
                             sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sql_final)
                 file.seek(0)
-    # file.close()
-    # sql.close()
+    file.close()
+    sql.close()

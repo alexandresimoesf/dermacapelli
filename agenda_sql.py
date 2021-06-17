@@ -2,9 +2,16 @@ import csv
 from anamnese_sql import anamnese
 
 medicos: dict = {'20': '203',
-                 'n25': '210',
-                 'n26': '212',
-                 'n2': '211'}
+                 '25': '210',
+                 '26': '212',
+                 '2': '211'}
+
+especializacao = {'203': '776',
+                  '210': '798',
+                  '213': '806',
+                  '212': '804',
+                  '214': '808',
+                  '211': '801'}
 
 agenda_to_anamnese: list = []
 
@@ -39,7 +46,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 fk_clinica_id = '83'
                 fk_medico_id = medicos[linha['CodMedico']]
                 fk_paciente_id = linha['CodPaciente']
-                fk_especializacao_id = 'null'
+                fk_especializacao_id = especializacao[fk_medico_id]
                 fk_forma_atendimento_id = 'null'
 
                 sqlconteudo = "'{}', '{}', '{}', '{}', '{}', {}," \
@@ -67,13 +74,15 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
 
                 sqlfinal = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sqlfinal)
-                sql.write('INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(fk_paciente_id))
+                sql.write(
+                    'INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(
+                        fk_paciente_id))
                 agenda_to_anamnese.append((linha['CodPaciente'], data_agendada))
-                if linha['CodPaciente'] == '510':
-                    sql.close()
-                    file.close()
-                    anamnese(agenda_to_anamnese)
-                    break
-# sql.close()
-# file.close()
-# anamnese(agenda_to_anamnese)
+                # if linha['CodPaciente'] == '510':
+                #     sql.close()
+                #     file.close()
+                #     anamnese(agenda_to_anamnese)
+                #     break
+sql.close()
+file.close()
+anamnese(agenda_to_anamnese)

@@ -29,11 +29,10 @@ def anamnese(*args):
                                 historic = historic.replace('<CRLF>', '')
                                 fk_medico_id = medicos[linha['CodMedico']]
                                 sqlconteudo = "'{}', null, '{} 08:00:00', {}," \
-                                              " (p.id from public.prontuario p where fk_paciente_id = {}));".format(
-                                    historic,
-                                    data,
-                                    fk_medico_id,
-                                    codigo)
+                                              " (p.id from public.prontuario p where fk_paciente_id = {}));".format(historic,
+                                                                                                                    data,
+                                                                                                                    fk_medico_id,
+                                                                                                                    codigo)
                             if linha['CodPaciente'] > codigo_agenda:
                                 break
                 print(time.time() - tempo)

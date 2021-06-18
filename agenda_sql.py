@@ -22,7 +22,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
     colunas_agenda = 'data_agendada, data_agendada_timestamp, horario, descricao, etiqueta, ' \
               'status, status_consulta, confirm_consulta, codigo_saida, data_solicitacao,' \
               'tipo_atendimento, is_encaixe, data_atendimento, data_finalizacao,' \
-              'responsavel_finalizacao, paciente_online, fk_clinica_id, fk_medico_id,' \
+              'paciente_online, fk_clinica_id, fk_medico_id,' \
               'fk_paciente_id, fk_especializacao_id, fk_forma_atendimento_id) VALUES ('
     for n, linha in enumerate(reader):
         if linha['CodMedico'] in medicos.keys():
@@ -51,7 +51,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
 
                 sql_conteudo_agenda = "'{}', '{}', '{}', '{}', '{}', {}," \
                               " '{}', '{}', '{}', '{}', '{}', {}," \
-                              " '{}', {}, '{}', {}, {}, {}," \
+                              " '{}', {}, {}, {}, {}," \
                               " (SELECT id FROM public.paciente where paciente.id_paciente_dermacapelli = {}), {}, {});".format(data_agendada,
                                                                                                                              data_agendada_timestamp,
                                                                                                                              horario, descricao,
@@ -64,7 +64,6 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                                                                                                                              is_encaixe,
                                                                                                                              data_atendimento,
                                                                                                                              data_finalizacao,
-                                                                                                                             responsavel_recepcao,
                                                                                                                              paciente_online,
                                                                                                                              fk_clinica_id,
                                                                                                                              fk_medico_id,

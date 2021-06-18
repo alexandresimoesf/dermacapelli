@@ -7,10 +7,10 @@ for arquivo in ['anamnese_sql_juntado.sql']:
         for n, linha_sql in enumerate(sql_file):
             try:
                 sql = linha_sql
-                cur.execute(sql)
+                # cur.execute(sql)
             except Exception as e:
                 con.rollback()
                 print(n, e)
 
-    con.commit()
+    # con.commit()
 con.close()

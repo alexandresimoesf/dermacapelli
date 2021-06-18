@@ -80,7 +80,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                           ' VALUES'
                           ' (now(), {},'
                           ' (SELECT id FROM public.prontuario WHERE fk_paciente_id = (SELECT id FROM paciente where paciente.id_paciente_dermacapelli={} LIMIT 1)),'
-                          ' (SELECT fk_rede_clinica_id FROM public.clinica WHERE id = (83)), false, false);'.format(fk_medico_id, fk_paciente_id))
+                          ' (SELECT fk_rede_clinica_id FROM public.clinica WHERE id = (83)), false, false);\n'.format(fk_medico_id, fk_paciente_id))
                 agenda_to_anamnese.append((n, linha['CodPaciente'], data_agendada))
                 # if linha['CodPaciente'] == '3215':
                 #     sql.close()

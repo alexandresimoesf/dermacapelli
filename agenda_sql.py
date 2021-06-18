@@ -1,10 +1,10 @@
 import csv
 from anamnese_sql import anamnese
 
-medicos: dict = {'n20': '203',
+medicos: dict = {'20': '203',
                  'n25': '210',
                  'n26': '212',
-                 '2': '211'}
+                 'n2': '211'}
 
 especializacao = {'203': '776',
                   '210': '798',
@@ -17,9 +17,9 @@ agenda_to_anamnese: list = []
 
 with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
     reader = csv.DictReader(file, delimiter=';')
-    sql = open('agenda_sql_2.sql', 'w', encoding='latin-1')
-    sql_inicio = 'INSERT INTO public.agenda('
-    colunas = 'data_agendada, data_agendada_timestamp, horario, descricao, etiqueta, ' \
+    sql = open('agenda_sql_203.sql', 'w', encoding='latin-1')
+    sql_inicio_agenda = 'INSERT INTO public.agenda('
+    colunas_agenda = 'data_agendada, data_agendada_timestamp, horario, descricao, etiqueta, ' \
               'status, status_consulta, confirm_consulta, codigo_saida, data_solicitacao,' \
               'tipo_atendimento, is_encaixe, data_atendimento, data_finalizacao,' \
               'responsavel_finalizacao, paciente_online, fk_clinica_id, fk_medico_id,' \
@@ -49,7 +49,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 fk_especializacao_id = especializacao[fk_medico_id]
                 fk_forma_atendimento_id = '230'
 
-                sqlconteudo = "'{}', '{}', '{}', '{}', '{}', {}," \
+                sql_conteudo_agenda = "'{}', '{}', '{}', '{}', '{}', {}," \
                               " '{}', '{}', '{}', '{}', '{}', {}," \
                               " '{}', {}, '{}', {}, {}, {}," \
                               " (SELECT id FROM public.paciente where paciente.id_paciente_dermacapelli = {}), {}, {});".format(data_agendada,
@@ -72,7 +72,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                                                                                                                              fk_especializacao_id,
                                                                                                                              fk_forma_atendimento_id)
 
-                sqlfinal = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
+                sqlfinal = '{}{}{}\n'.format(sql_inicio_agenda, colunas_agenda, sql_conteudo_agenda)
                 sql.write(sqlfinal)
                 sql.write('INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(
                         fk_paciente_id))
@@ -84,4 +84,5 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 #     break
 sql.close()
 file.close()
+del sql_inicio_agenda, colunas_agenda, sql_conteudo_agenda
 anamnese(agenda_to_anamnese)

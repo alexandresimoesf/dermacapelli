@@ -76,6 +76,11 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 sql.write(sqlfinal)
                 sql.write('INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(
                         fk_paciente_id))
+                sql.write('INSERT INTO public.permissao_prontuario_clinica(modificado_em, fk_medico_id, fk_prontuario_id, fk_rede_clinica_id, escrita, leitura)'
+                          ' VALUES'
+                          ' (now(), {},'
+                          ' (SELECT id FROM public.prontuario WHERE fk_paciente_id = (SELECT id FROM paciente where paciente.id_paciente_dermacapelli={} LIMIT 1)),'
+                          ' (SELECT fk_rede_clinica_id FROM public.clinica WHERE id = (83)), false, false);'.format(fk_medico_id, fk_paciente_id))
                 agenda_to_anamnese.append((n, linha['CodPaciente'], data_agendada))
                 # if linha['CodPaciente'] == '3215':
                 #     sql.close()

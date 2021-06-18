@@ -138,6 +138,6 @@ import csv
 # INSERT INTO public.permissao_prontuario_clinica(modificado_em, fk_medico_id, fk_prontuario_id, fk_rede_clinica_id,
 #                                                 escrita, leitura)
 # VALUES (now(),
-#         idMedico na doctor,
-#                     (SELECT id FROM public.prontuario WHERE fk_paciente_id = (SELECT id FROM paciente where paciente.id_paciente_visao=154444 LIMIT 1)),
-# (SELECT fk_rede_clinica_id FROM public.clinica WHERE id = (30)), 'false', 'false');
+#         {idMedico na doctor},
+#                     (SELECT id FROM public.prontuario WHERE fk_paciente_id = (SELECT id FROM paciente where paciente.id_paciente_dermacapelli={} LIMIT 1)),
+# (SELECT fk_rede_clinica_id FROM public.clinica WHERE id = (83)), 'false', 'false');

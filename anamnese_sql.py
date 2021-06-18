@@ -14,7 +14,7 @@ def anamnese(*args):
         reader = deque(csv.DictReader(file, delimiter=';'))
         sql_inicio = 'INSERT INTO public.anamnese('
         colunas = 'anamnese, checksum, datacriacao, fk_responsavel_id, fk_prontuario_id) VALUES ('
-        with open('anamnese_sql_203.sql', 'w', encoding='utf-8') as sql:
+        with open('anamnese_sql_2.sql', 'w', encoding='utf-8') as sql:
             for n, codigo_agenda, data_agenda in args[0]:
                 historic = ''
                 # tempo = time.time()
@@ -25,7 +25,7 @@ def anamnese(*args):
                             if codigo == codigo_agenda and data == data_agenda:
                                 # print(linha)
                                 if linha['Historico'] != 'null':
-                                    historic += linha['Historico'] + '. '
+                                    historic += linha['Historico'] + '. B2ML'
                                 historic = historic.replace('<Crlf>', '')
                                 historic = historic.replace('<CRLF>', '')
                                 fk_medico_id = medicos[linha['CodMedico']]

@@ -27,7 +27,7 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
     for n, linha in enumerate(reader):
         if linha['CodMedico'] in medicos.keys():
             if linha['Atributo'].startswith('@c') and linha['CodPaciente'] != 'null':
-                data_agendada = '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])
+                data_agendada = '{}{}{}{}-{}{}-{}{}'.format(*linha['DataConsulta'])
                 data_agendada_timestamp = '{} {}'.format(data_agendada, '08:00:00')
                 horario = '08:00'
                 descricao = ''

@@ -21,7 +21,7 @@ def anamnese(*args):
                 for index, linha in enumerate(reader):
                     if index >= n:
                         if linha['CodMedico'] in medicos.keys():
-                            codigo, data = linha['CodPaciente'], '{}{}{}{}/{}{}/{}{}'.format(*linha['DataConsulta'])
+                            codigo, data = linha['CodPaciente'], '{}{}{}{}-{}{}-{}{}'.format(*linha['DataConsulta'])
                             if codigo == codigo_agenda and data == data_agenda:
                                 # print(linha)
                                 if linha['Historico'] != 'null':

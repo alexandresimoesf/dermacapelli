@@ -1,10 +1,10 @@
 import csv
 from anamnese_sql import anamnese
 
-medicos: dict = {'20': '203',
-                 '25': '210',
-                 '26': '212',
-                 '2': '211'}
+medicos: dict = {'n20': '203',
+                 'n25': '210',
+                 'n26': '212',
+                 'n2': '211'}
 
 especializacao = {'203': '776',
                   '210': '798',

@@ -62,8 +62,9 @@ with open('PACIENTE_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 sql.write('INSERT INTO public.paciente_clinica(paciente_id,'
                           ' clinica_id) SELECT id, 83 from public.paciente WHERE paciente.id_paciente_dermacapelli = {};\n'.format(id))
         except Exception as e:
-            print(e)
-            print('#' * 10)
+            pass
+            # print(e)
+            # print('#' * 10)
     sql.close()
 
 # 	INSERT INTO public.paciente_clinica(

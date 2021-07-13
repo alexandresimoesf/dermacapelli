@@ -34,11 +34,10 @@ def anamnese(*args):
                             break
 
                 sqlconteudo = "'{}', null, '{} 08:00:00', {}," \
-                              " (SELECT p.id from public.prontuario p where fk_paciente_id = {}));".format(historic,
+                              " (SELECT p.id from public.prontuario p where fk_paciente_id = (select id from paciente where id_paciente_dermacapelli = {} limit 1)));".format(historic,
                                                                                                     data,
                                                                                                     fk_medico_id,
                                                                                                     codigo)
-                # print(time.time() - tempo)
                 sql_final = '{}{}{}\n'.format(sql_inicio, colunas, sqlconteudo)
                 sql.write(sql_final)
                 # file.seek(0)

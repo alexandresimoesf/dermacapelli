@@ -1,10 +1,10 @@
 import csv
 from anamnese_sql import anamnese
 
-medicos: dict = {'n20': '203',
-                 'n25': '210',
-                 'n26': '212',
-                 'n2': '211'}
+medicos: dict = {'20': '203',
+                 '25': '210',
+                 '26': '212',
+                 '2': '211'}
 
 especializacao = {'203': '776',
                   '210': '798',
@@ -14,6 +14,8 @@ especializacao = {'203': '776',
                   '211': '801'}
 
 agenda_to_anamnese: list = []
+prontuario_ja_criado = []
+permissao_prontuario_clinico = []
 
 with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
     reader = csv.DictReader(file, delimiter=';')
@@ -50,36 +52,42 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 fk_forma_atendimento_id = '230'
 
                 sql_conteudo_agenda = "'{}', '{}', '{}', '{}', '{}', {}," \
-                              " '{}', '{}', '{}', '{}', '{}', {}," \
-                              " '{}', {}, {}, {}, {}," \
-                              " (SELECT id FROM public.paciente where paciente.id_paciente_dermacapelli = {}), {}, {});".format(data_agendada,
-                                                                                                                             data_agendada_timestamp,
-                                                                                                                             horario, descricao,
-                                                                                                                             etiqueta, status,
-                                                                                                                             status_consulta,
-                                                                                                                             confirm_consulta,
-                                                                                                                             codigo_saida,
-                                                                                                                             data_solicitacao,
-                                                                                                                             tipo_atendimento,
-                                                                                                                             is_encaixe,
-                                                                                                                             data_atendimento,
-                                                                                                                             data_finalizacao,
-                                                                                                                             paciente_online,
-                                                                                                                             fk_clinica_id,
-                                                                                                                             fk_medico_id,
-                                                                                                                             fk_paciente_id,
-                                                                                                                             fk_especializacao_id,
-                                                                                                                             fk_forma_atendimento_id)
+                                      " '{}', '{}', '{}', '{}', '{}', {}," \
+                                      " '{}', {}, {}, {}, {}," \
+                                      " (SELECT id FROM public.paciente where paciente.id_paciente_dermacapelli = {}), {}, {});".format(data_agendada,
+                                                                                                                                        data_agendada_timestamp,
+                                                                                                                                        horario, descricao,
+                                                                                                                                        etiqueta, status,
+                                                                                                                                        status_consulta,
+                                                                                                                                        confirm_consulta,
+                                                                                                                                        codigo_saida,
+                                                                                                                                        data_solicitacao,
+                                                                                                                                        tipo_atendimento,
+                                                                                                                                        is_encaixe,
+                                                                                                                                        data_atendimento,
+                                                                                                                                        data_finalizacao,
+                                                                                                                                        paciente_online,
+                                                                                                                                        fk_clinica_id,
+                                                                                                                                        fk_medico_id,
+                                                                                                                                        fk_paciente_id,
+                                                                                                                                        fk_especializacao_id,
+                                                                                                                                        fk_forma_atendimento_id)
 
                 sqlfinal = '{}{}{}\n'.format(sql_inicio_agenda, colunas_agenda, sql_conteudo_agenda)
                 sql.write(sqlfinal)
-                sql.write('INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(
+
+                if fk_paciente_id in prontuario_ja_criado:
+                    pass
+                else:
+                    prontuario_ja_criado.append(fk_paciente_id)
+                    sql.write('INSERT INTO public.prontuario(datacriacao, fk_paciente_id) SELECT now(), id from public.paciente where paciente.id_paciente_dermacapelli = {};\n'.format(
                         fk_paciente_id))
-                sql.write('INSERT INTO public.permissao_prontuario_clinica(modificado_em, fk_medico_id, fk_prontuario_id, fk_rede_clinica_id, escrita, leitura)'
-                          ' VALUES'
-                          ' (now(), {},'
-                          ' (SELECT id FROM public.prontuario WHERE fk_paciente_id = (SELECT id FROM paciente where paciente.id_paciente_dermacapelli={} LIMIT 1)),'
-                          ' (SELECT fk_rede_clinica_id FROM public.clinica WHERE id = (83)), false, false);\n'.format(fk_medico_id, fk_paciente_id))
+                    sql.write('INSERT INTO public.permissao_prontuario_clinica(modificado_em, fk_medico_id, fk_prontuario_id, fk_rede_clinica_id, escrita, leitura)'
+                              ' VALUES'
+                              ' (now(), {},'
+                              ' (SELECT id FROM public.prontuario WHERE fk_paciente_id = (SELECT id FROM paciente where paciente.id_paciente_dermacapelli={} LIMIT 1)),'
+                              ' (SELECT fk_rede_clinica_id FROM public.clinica WHERE id = (83)), false, false);\n'.format(fk_medico_id, fk_paciente_id))
+
                 agenda_to_anamnese.append((n, linha['CodPaciente'], data_agendada))
                 # if linha['CodPaciente'] == '3215':
                 #     sql.close()
@@ -88,5 +96,4 @@ with open('HISTORIC_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
                 #     break
 sql.close()
 file.close()
-del sql_inicio_agenda, colunas_agenda, sql_conteudo_agenda
-anamnese(agenda_to_anamnese)
+# anamnese(agenda_to_anamnese)

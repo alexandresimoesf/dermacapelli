@@ -1,5 +1,6 @@
 import csv
 import re
+import unidecode
 import pandas as pd
 
 # #
@@ -40,7 +41,7 @@ with open('PACIENTE_NOVO.csv', 'r', newline='\n', encoding='latin-1') as file:
             else:
                 nascimento = '{}{}{}{}/{}{}/{}{}'.format(*linha['AnoNascimento'], *linha['MesDiaNascimento'])
             nome = linha['Nome']
-            profissao = linha['Profissao'].encode('utf-8').decode('latin-1')
+            profissao = unidecode.unidecode(linha['Profissao']) # .encode('utf-8').decode('latin-1')
             sexo = 'MASCULINO' if linha['Sexo'] == 'M' else 'FEMININO'
             status_p = 'ACTIVED'
             tel = cel
